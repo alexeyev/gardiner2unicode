@@ -1,0 +1,1 @@
+wikitextparser>=0.47.9
