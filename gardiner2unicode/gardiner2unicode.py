@@ -1,11 +1,14 @@
 # coding: utf-8
 
+import logging
+from functools import lru_cache
+from typing import Optional, Dict
+
 import wikitextparser as wtp
 
 
-def map(path_templates_list: str = "wikipedia_table.wiki"):
-
-    parsing_result = wtp.parse(open(path_templates_list, "r+", encoding="utf-8").read().strip())
+def _map(text_data: str) -> Dict[str, str]:
+    parsing_result = wtp.parse(text_data)
     data = []
 
     for t in parsing_result.templates:
@@ -37,18 +40,19 @@ def map(path_templates_list: str = "wikipedia_table.wiki"):
                     and not arg.name == "qid" \
                     and not arg.name == "reason" \
                     and not arg.name == "url" and not arg.name == "website" and not arg.name == "title":
-                raise Exception(f"Who are you, Mr. {arg.name.strip()}? arg_value = {arg.value}")
+                raise Exception(f"Unknown field: [{arg.name.strip()}] arg_value = {arg.value}")
 
         if not gardiner_met or (curr_data.get("unicode", None) is None and curr_data["unicode_id"] is None):
             t = str(t).replace('\n', ' ')
-            print(f"This line does not contain any Gardiner code! {t}")
+            logging.debug(f"This line does not contain any Gardiner code! {t}")
         else:
             data.append(curr_data)
 
     result = {}
 
     for dictionary in data:
-        result[dictionary["gardiner"]] = (dictionary["unicode_id"], dictionary["unicode"])
+        eight_letter_unicode = dictionary['unicode_id'].zfill(8)
+        result[dictionary["gardiner"]] = eight_letter_unicode  # , dictionary["unicode"])
 
     return result
 
@@ -56,12 +60,32 @@ def map(path_templates_list: str = "wikipedia_table.wiki"):
 class GardinerToUnicodeMap(object):
 
     def __init__(self, path: str = None):
-        pass
-        # todo:
 
-    def to_unicode(self, code: str):
-        pass
+        logging.debug("Reading archive...")
 
+        if path is None:
 
-if __name__ == "__main__":
-    print(map())
+            try:
+                import importlib.resources as pkg_resources
+            except ImportError:
+                # Trying backported to PY<37 `importlib_resources`.
+                import importlib_resources as pkg_resources
+
+            from . import data
+
+            with pkg_resources.path(data, "wikipedia_table.wiki") as filepath:
+                raw_text = open(filepath, "r+", encoding="utf-8").read().strip()
+        else:
+            raw_text = open(path, "r+", encoding="utf-8").read().strip()
+
+        self.gardiner2unicode = _map(raw_text)
+        self.unicode2gardiner = {v: k for k, v in self.gardiner2unicode.items()}
+
+    @lru_cache(maxsize=10000)
+    def to_unicode_hex(self, code: str) -> Optional[str]:
+        return self.gardiner2unicode.get(code, None)
+
+    @lru_cache(maxsize=10000)
+    def to_unicode_int(self, code: str):
+        hx = self.to_unicode_hex(code)
+        return int(hx, 16) if hx is not None else None
