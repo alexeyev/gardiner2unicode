@@ -52,5 +52,16 @@ def map(path_templates_list: str = "wikipedia_table.wiki"):
 
     return result
 
+
+class GardinerToUnicodeMap(object):
+
+    def __init__(self, path: str = None):
+        pass
+        # todo:
+
+    def to_unicode(self, code: str):
+        pass
+
+
 if __name__ == "__main__":
     print(map())

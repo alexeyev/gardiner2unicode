@@ -1,0 +1,3 @@
+include README.md
+include gardiner2unicode/data/*wiki
+include gardiner2unicode/data/__init__.py
