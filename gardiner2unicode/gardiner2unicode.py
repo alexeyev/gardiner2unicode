@@ -80,12 +80,24 @@ class GardinerToUnicodeMap(object):
 
         self.gardiner2unicode = _map(raw_text)
         self.unicode2gardiner = {v: k for k, v in self.gardiner2unicode.items()}
+        assert len(self.gardiner2unicode) == len(self.unicode2gardiner)
+
+        logging.debug(f"Archive read successfully. Map of size [{len(self.gardiner2unicode)}] was built.")
 
     @lru_cache(maxsize=10000)
     def to_unicode_hex(self, code: str) -> Optional[str]:
         return self.gardiner2unicode.get(code, None)
 
     @lru_cache(maxsize=10000)
-    def to_unicode_int(self, code: str):
+    def to_unicode_int(self, code: str) -> Optional[int]:
         hx = self.to_unicode_hex(code)
         return int(hx, 16) if hx is not None else None
+
+    @lru_cache(maxsize=10000)
+    def to_gardiner_by_hex(self, hex: str) -> Optional[str]:
+        return self.unicode2gardiner.get(hex.upper(), None)
+
+    @lru_cache(maxsize=10000)
+    def to_gardiner_by_int(self, unicode_decimal_number: int) -> Optional[str]:
+        hex_code = "000" + hex(unicode_decimal_number)[2:].upper()
+        return self.to_gardiner_by_hex(hex_code)
