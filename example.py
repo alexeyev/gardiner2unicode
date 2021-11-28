@@ -1,7 +1,8 @@
 # coding: utf-8
 
-from gardiner2unicode import GardinerToUnicodeMap
+from gardiner2unicode import GardinerToUnicodeMap, UnicodeGlyphGenerator
 import logging
+import os
 
 if __name__ == "__main__":
     root = logging.getLogger()
@@ -18,3 +19,12 @@ if __name__ == "__main__":
         unic = "000" + hex(uid)[2:].upper()
         if unic not in g2u.unicode2gardiner:
             raise Exception(f"Character {chr(uid)} ({unic}) was not found in the map!")
+
+    os.makedirs("images", exist_ok=True)
+    u2i = UnicodeGlyphGenerator()
+
+    for gardiner_code in g2u.gardiner2unicode:
+        try:
+            u2i.generate_image(chr(g2u.to_unicode_int(gardiner_code)), save_path_png=f"images/{gardiner_code}.png")
+        except Exception as e:
+            print(gardiner_code, e)

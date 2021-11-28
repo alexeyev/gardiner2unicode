@@ -1,10 +1,17 @@
 # coding: utf-8
 
 import logging
+import re
 from functools import lru_cache
 from typing import Optional, Dict
 
 import wikitextparser as wtp
+
+_TAG_PATTERN = re.compile("<[^>]*>")
+
+
+def _strip_tags(string: str) -> str:
+    return re.sub(_TAG_PATTERN, "", string)
 
 
 def _map(text_data: str) -> Dict[str, str]:
@@ -28,7 +35,7 @@ def _map(text_data: str) -> Dict[str, str]:
                 curr_data["description"] = arg.value.strip()
             elif arg.name == "gardiner":
                 gardiner_met = True
-                curr_data["gardiner"] = arg.value.strip()
+                curr_data["gardiner"] = _strip_tags(arg.value).strip()
             elif arg.name == "unicode":
                 curr_data["unicode_id"] = arg.value.strip()
             elif arg.name == "pron":
@@ -94,10 +101,21 @@ class GardinerToUnicodeMap(object):
         return int(hx, 16) if hx is not None else None
 
     @lru_cache(maxsize=10000)
-    def to_gardiner_by_hex(self, hex: str) -> Optional[str]:
+    def to_unicode_char(self, code: str) -> Optional[int]:
+        hx = self.to_unicode_hex(code)
+        return chr(int(hx, 16)) if hx is not None else None
+
+    @lru_cache(maxsize=10000)
+    def to_gardiner_from_hex(self, hex: str) -> Optional[str]:
         return self.unicode2gardiner.get(hex.upper(), None)
 
     @lru_cache(maxsize=10000)
-    def to_gardiner_by_int(self, unicode_decimal_number: int) -> Optional[str]:
+    def to_gardiner_from_int(self, unicode_decimal_number: int) -> Optional[str]:
         hex_code = "000" + hex(unicode_decimal_number)[2:].upper()
-        return self.to_gardiner_by_hex(hex_code)
+        return self.to_gardiner_from_hex(hex_code)
+
+    @lru_cache(maxsize=10000)
+    def to_gardiner_from_chr(self, char: str) -> Optional[str]:
+        assert len(char) == 1
+        hex_code = "000" + hex(ord(char))[2:].upper()
+        return self.to_gardiner_from_hex(hex_code)
