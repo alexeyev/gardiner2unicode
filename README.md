@@ -37,9 +37,13 @@ Please cite this repository if you use this work in your research.
 ```bibtex
 @misc{gardiner2unicode2021alekseev,
   title     = {{alexeyev/gardiner2unicode: Mapping Egyptian Hieroglyphs}},
+  author    = {Anton Alekseev}, 
   year      = {2021},
   url       = {https://github.com/alexeyev/gardiner2unicode},
-  language  = {english}
+  language  = {english},
+  publisher = {GitHub}, 
+  journal   = {GitHub repository},  
+  howpublished = {\url{https://github.com/alexeyev/gardiner2unicode/}}, 
 }
 ```
 
