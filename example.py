@@ -28,3 +28,6 @@ if __name__ == "__main__":
             u2i.generate_image(chr(g2u.to_unicode_int(gardiner_code)), save_path_png=f"images/{gardiner_code}.png")
         except Exception as e:
             print(gardiner_code, e)
+
+    ugg = UnicodeGlyphGenerator()
+    ugg.generate_image("𓉓", save_path_png="O3_image.png")

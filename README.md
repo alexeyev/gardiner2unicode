@@ -20,10 +20,15 @@ One can use any other font with `UnicodeGlyphGenerator`.
 ## Usage example
 
 ```python
-from gardiner2unicode import GardinerToUnicodeMap
+from gardiner2unicode import GardinerToUnicodeMap, UnicodeGlyphGenerator
 g2u = GardinerToUnicodeMap()
 print(g2u.to_unicode_hex("A1"))
+
+ugg = UnicodeGlyphGenerator()
+ugg.generate_image("𓉓", save_path_png="my_O3_image.png")
 ```
+
+![O3](O3_image.png?raw=true "Generated O3 image: a combination of a house, an oar, a tall loaf and a beer jug.")
 
 ## How to cite
 
