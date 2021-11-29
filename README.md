@@ -13,6 +13,14 @@ by default. Please note that since 2.05 its license is [OFL 1.1](https://scripts
 
 One can use any other font with `UnicodeGlyphGenerator`.
 
+
+![Python 3x](https://img.shields.io/badge/python-3.x-blue.svg)
+[![PyPI version][pypi_badge]][pypi_link]
+[![Downloads](https://pepy.tech/badge/gardiner2unicode)](https://pepy.tech/project/gardiner2unicode)
+
+[pypi_badge]: https://badge.fury.io/py/gardiner2unicode.svg
+[pypi_link]: https://pypi.python.org/pypi/gardiner2unicode
+
 ## Installation
 
     pip install -U gardiner2unicode
