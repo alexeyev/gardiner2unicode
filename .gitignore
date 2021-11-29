@@ -2,3 +2,5 @@
 *~
 *.pyc
 *.txt
+dist
+gardiner2unicode.egg-info
