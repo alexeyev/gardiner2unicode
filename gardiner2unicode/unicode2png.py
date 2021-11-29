@@ -1,6 +1,8 @@
 # coding: utf-8
-from PIL import Image, ImageDraw, ImageFont
+
 import logging
+
+from PIL import Image, ImageDraw, ImageFont
 
 
 class UnicodeGlyphGenerator(object):
@@ -28,6 +30,12 @@ class UnicodeGlyphGenerator(object):
             self.font = ImageFont.truetype(path_to_font, size=font_size, encoding="unic", layout_engine=layout_engine)
 
     def generate_image(self, unicode_text: str, save_path_png=None):
+        """
+            Draws an image of the provided Unicode character using the font provided
+            on construction of the `UnicodeGlyphGenerator` object
+        :param unicode_text: a character to draw
+        :param save_path_png: path for saving the PNG image
+        """
 
         if len(unicode_text) > 1:
             logging.warning("Please not that the generated image might be formatted poorly "

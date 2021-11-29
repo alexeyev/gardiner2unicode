@@ -1,8 +1,10 @@
 # coding: utf-8
 
-from gardiner2unicode import GardinerToUnicodeMap, UnicodeGlyphGenerator
-import logging
 import os
+import logging
+
+from gardiner2unicode import GardinerToUnicodeMap, UnicodeGlyphGenerator
+
 
 if __name__ == "__main__":
     root = logging.getLogger()
@@ -12,6 +14,7 @@ if __name__ == "__main__":
 
     assert g2u.to_unicode_hex("A1") == "00013000"
     assert g2u.to_unicode_int("A1") == 77824
+    assert g2u.to_unicode_char("A1") == "𓀀"
 
     # checking if all the characters available in Unicode table
     # can be found in the map

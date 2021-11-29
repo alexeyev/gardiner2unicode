@@ -11,7 +11,7 @@ setup(
     name="gardiner2unicode",
     packages=setuptools.find_packages(),
     version="0.0.1",
-    description="Mapping Gardiner's codes to Unicode + generating images.",
+    description="Mapping Gardiner's codes to Unicode + generating corresponding images.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Anton Alekseev",
