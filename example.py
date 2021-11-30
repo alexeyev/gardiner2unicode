@@ -33,4 +33,4 @@ if __name__ == "__main__":
             print(gardiner_code, e)
 
     ugg = UnicodeGlyphGenerator()
-    ugg.generate_image("𓉓", save_path_png="O3_image.png")
+    ugg.generate_image(chr(g2u.to_unicode_int("D20")), save_path_png="D20_image.png")
