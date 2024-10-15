@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
-import setuptools
-
+# Read the contents of README.md
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+# Read the contents of requirements.txt
+with open("requirements.txt", "r", encoding="utf-8") as f:
+    requirements = f.read().splitlines()
+
 setup(
     name="gardiner2unicode",
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     version="0.0.2",
     description="Mapping Gardiner's codes to Unicode + generating corresponding images.",
     long_description=long_description,
@@ -23,7 +26,10 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    zip_safe=False,
-    include_package_data=True,
     python_requires=">=3.6",
+    install_requires=requirements,
+    package_data={
+        "gardiner2unicode": ["data/*.wiki"],
+    },
+    include_package_data=True,
 )
