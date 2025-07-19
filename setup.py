@@ -13,7 +13,7 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
 setup(
     name="gardiner2unicode",
     packages=find_packages(),
-    version="0.0.2",
+    version="0.0.3",
     description="Mapping Gardiner's codes to Unicode + generating corresponding images.",
     long_description=long_description,
     long_description_content_type="text/markdown",
