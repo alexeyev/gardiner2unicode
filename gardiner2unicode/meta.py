@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-
 package = "gardiner2unicode"
-version = "0.0.2"
+version = "1.0.0"
 authors = ["Anton Alekseev"]
 authors_string = ", ".join(authors)
 emails = ["anton.m.alexeyev@gmail.com"]

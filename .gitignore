@@ -1,6 +1,28 @@
-.idea
+# IDE / editor
+.idea/
+.vscode/
 *~
-*.pyc
-*.txt
-dist
-gardiner2unicode.egg-info
+*.swp
+
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Build / packaging artifacts
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+
+# Test / lint / coverage caches
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Generated example output
+images/
